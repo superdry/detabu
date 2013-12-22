@@ -1,0 +1,36 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.6.+'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.0'
+    }
+}
+apply plugin: 'android'
+apply plugin: 'android-apt'
+
+repositories {
+    mavenCentral()
+}
+
+android {
+    compileSdkVersion "Google Inc.:Glass Development Kit Sneak Peek:15"
+    buildToolsVersion "19.0.0"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 15
+    }
+}
+
+dependencies {
+    compile "com.android.support:support-v4:18.0.+"
+    compile 'com.squareup.dagger:dagger:1.1.0'
+    apt 'com.squareup.dagger:dagger-compiler:1.1.0'
+    compile "org.projectlombok:lombok:0.11.+"
+    apt "org.projectlombok:lombok:0.11.+"
+    compile project(':volley')
+    compile "com.google.code.gson:gson:2.2.4"
+    compile "com.jakewharton:butterknife:4.0.1"
+}

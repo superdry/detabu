@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Detabu</string>
+    <string name="show_detabu_voice_trigger">show nearby items</string>
+    <string name="item_found_message">%d items found.</string>
+
+</resources>
