@@ -50,6 +50,7 @@ public class Item implements Parcelable {
         }
     };
 
+    @Data
     public static class PlaceGeo implements Parcelable {
         float lat;
         float lon;

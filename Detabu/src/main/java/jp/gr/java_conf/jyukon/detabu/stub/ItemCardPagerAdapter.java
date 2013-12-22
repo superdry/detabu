@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Response;
+import com.squareup.otto.Bus;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,6 +21,7 @@ import jp.gr.java_conf.jyukon.detabu.DetabuBaseActivity;
 import jp.gr.java_conf.jyukon.detabu.ICard;
 import jp.gr.java_conf.jyukon.detabu.ICardFactory;
 import jp.gr.java_conf.jyukon.detabu.RequestManager;
+import jp.gr.java_conf.jyukon.detabu.event.ItemSelectedEvent;
 import jp.gr.java_conf.jyukon.detabu.model.Item;
 import lombok.Setter;
 
@@ -29,6 +31,7 @@ public class ItemCardPagerAdapter extends PagerAdapter {
     @Setter List<Item> items;
     @Inject ICardFactory mCardFactory;
     @Inject RequestManager mRequestManager;
+    @Inject Bus bus;
 
     public ItemCardPagerAdapter(Context context) {
         mContext = context;
@@ -70,6 +73,12 @@ public class ItemCardPagerAdapter extends PagerAdapter {
                     }
                 });
         container.addView(card.toView());
+        card.toView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bus.post(new ItemSelectedEvent(item));
+            }
+        });
         return card.toView();
     }
 

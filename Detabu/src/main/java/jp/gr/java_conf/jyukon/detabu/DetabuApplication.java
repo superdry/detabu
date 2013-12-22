@@ -19,7 +19,8 @@ public class DetabuApplication extends Application {
     protected List<Object> getModules() {
         return Arrays.asList(
                 new AndroidModule(this),
-                new RequestManagerModule(this)
+                new RequestManagerModule(this),
+                new OttoModule()
         );
     }
 }

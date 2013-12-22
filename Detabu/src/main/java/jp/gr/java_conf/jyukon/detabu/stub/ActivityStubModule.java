@@ -6,6 +6,7 @@ import dagger.Module;
 import dagger.Provides;
 import jp.gr.java_conf.jyukon.detabu.ICardFactory;
 import jp.gr.java_conf.jyukon.detabu.ICardScrollView;
+import jp.gr.java_conf.jyukon.detabu.ItemDirectionFragment;
 import jp.gr.java_conf.jyukon.detabu.ItemScrollFragment;
 import jp.gr.java_conf.jyukon.detabu.ItemsActivity;
 
@@ -13,6 +14,7 @@ import jp.gr.java_conf.jyukon.detabu.ItemsActivity;
     injects = {
         ItemsActivity.class,
         ItemScrollFragment.class,
+        ItemDirectionFragment.class,
         CardScrollViewImpl.class,
         ItemCardPagerAdapter.class,
         FullScreenImageCard.class
