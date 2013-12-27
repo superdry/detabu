@@ -9,11 +9,14 @@ import dagger.Provides;
 import jp.gr.java_conf.jyukon.detabu.DetabuService;
 import jp.gr.java_conf.jyukon.detabu.ICard;
 import jp.gr.java_conf.jyukon.detabu.ITimelineManager;
+import jp.gr.java_conf.jyukon.detabu.LiveCardRenderer;
 
 @Module(
     injects = {
         DetabuService.class,
-        LiveCardImpl.class
+        LiveCardImpl.class,
+        LiveCardRenderer.class,
+        LiveCardRendererImpl.class
     },
     complete = false,
     library = true
@@ -35,5 +38,10 @@ public class ServiceStubModule {
     @Provides
     ICard provideICard() {
         return new NotificationCard(mService);
+    }
+
+    @Provides
+    LiveCardRenderer provideLiveCardRenderer() {
+        return new LiveCardRendererImpl(mService);
     }
 }

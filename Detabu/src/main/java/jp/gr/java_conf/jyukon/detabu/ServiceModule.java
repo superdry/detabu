@@ -10,7 +10,8 @@ import dagger.Provides;
 @Module(
         injects = {
                 DetabuService.class,
-                LiveCardImpl.class
+                LiveCardImpl.class,
+                LiveCardRenderer.class
         },
         complete = false,
         library = true
@@ -32,5 +33,10 @@ public class ServiceModule {
     @Provides
     ICard provideICard() {
         return new CardImpl(mService);
+    }
+
+    @Provides
+    LiveCardRenderer provideLiveCardRenderer() {
+        return new LiveCardRendererImpl(mService);
     }
 }

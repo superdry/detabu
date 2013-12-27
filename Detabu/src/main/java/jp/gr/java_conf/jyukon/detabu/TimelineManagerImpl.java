@@ -14,7 +14,7 @@ public class TimelineManagerImpl implements ITimelineManager {
     }
 
     @Override
-    public ILiveCard getLiveCard(String id) {
+    public ILiveCard createLiveCard(String id) {
         return new LiveCardImpl(mTimelineManager, id);
     }
 }

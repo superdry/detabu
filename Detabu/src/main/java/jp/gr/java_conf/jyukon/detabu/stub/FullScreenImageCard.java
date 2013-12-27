@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
+import com.google.android.glass.app.Card;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -31,7 +33,7 @@ public class FullScreenImageCard implements ICard {
     }
 
     @Override
-    public ICard setFullScreenImages(boolean fullScreenImages) {
+    public ICard setImageLayout(Card.ImageLayout imageLayout) {
         return this;
     }
 
@@ -42,7 +44,7 @@ public class FullScreenImageCard implements ICard {
     }
 
     @Override
-    public ICard setInfo(String info) {
+    public ICard setFootnote(String info) {
         this.info.setText(info);
         return this;
     }
@@ -59,7 +61,7 @@ public class FullScreenImageCard implements ICard {
     }
 
     @Override
-    public int getNumberOfImages() {
+    public int getImageCount() {
         return 0;
     }
 

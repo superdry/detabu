@@ -1,6 +1,7 @@
 package jp.gr.java_conf.jyukon.detabu;
 
 import android.app.PendingIntent;
+import android.view.SurfaceHolder;
 import android.widget.RemoteViews;
 
 import com.google.android.glass.timeline.LiveCard;
@@ -12,19 +13,17 @@ public class LiveCardImpl implements ILiveCard {
     private LiveCard mLiveCard;
 
     public LiveCardImpl(TimelineManager timelineManager, String id) {
-        mLiveCard = timelineManager.getLiveCard(id);
+        mLiveCard = timelineManager.createLiveCard(id);
     }
 
     @Override
-    public ILiveCard setNonSilent(boolean nonSilent) {
-        mLiveCard.setNonSilent(nonSilent);
+    public ILiveCard setDirectRenderingEnabled(boolean enable) {
         return this;
     }
 
     @Override
-    public ILiveCard setViews(RemoteViews views) {
-        mLiveCard.setViews(views);
-        return this;
+    public SurfaceHolder getSurfaceHolder() {
+        return mLiveCard.getSurfaceHolder();
     }
 
     @Override
@@ -35,7 +34,7 @@ public class LiveCardImpl implements ILiveCard {
 
     @Override
     public void publish() {
-        mLiveCard.publish();
+        mLiveCard.publish(LiveCard.PublishMode.REVEAL);
     }
 
     @Override

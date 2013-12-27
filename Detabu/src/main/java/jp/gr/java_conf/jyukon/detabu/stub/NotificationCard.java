@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.google.android.glass.app.Card;
+
 import java.util.ArrayList;
 
 import jp.gr.java_conf.jyukon.detabu.ICard;
@@ -26,7 +28,7 @@ public class NotificationCard implements ICard {
     }
 
     @Override
-    public ICard setFullScreenImages(boolean fullScreenImages) {
+    public ICard setImageLayout(Card.ImageLayout imageLayout) {
         return this;
     }
 
@@ -37,7 +39,7 @@ public class NotificationCard implements ICard {
     }
 
     @Override
-    public ICard setInfo(String info) {
+    public ICard setFootnote(String info) {
         mRemoteViews.setTextViewText(R.id.info, info);
         return this;
     }
@@ -56,7 +58,7 @@ public class NotificationCard implements ICard {
     }
 
     @Override
-    public int getNumberOfImages() {
+    public int getImageCount() {
         return mImageUris.size();
     }
 

@@ -4,13 +4,15 @@ import android.net.Uri;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.google.android.glass.app.Card;
+
 public interface ICard {
-    ICard setFullScreenImages (boolean fullScreenImages);
+    ICard setImageLayout(Card.ImageLayout imageLayout);
     ICard setText(String text);
-    ICard setInfo(String info);
+    ICard setFootnote(String info);
     ICard addImage(Uri uri);
     void clearImages();
-    int getNumberOfImages();
+    int getImageCount();
     RemoteViews toRemoteViews();
     View toView ();
 }

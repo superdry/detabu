@@ -4,8 +4,14 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.support.v4.app.NotificationCompat;
+import android.view.Surface;
+import android.view.SurfaceHolder;
 import android.widget.RemoteViews;
+
+import com.google.android.glass.timeline.LiveCard;
 
 import javax.inject.Inject;
 
@@ -25,16 +31,13 @@ public class LiveCardImpl implements ILiveCard {
     }
 
     @Override
-    public ILiveCard setNonSilent(boolean nonSilent) {
+    public ILiveCard setDirectRenderingEnabled(boolean enable) {
         return this;
     }
 
     @Override
-    public ILiveCard setViews(RemoteViews views) {
-        mRemoteViews = views;
-        if (published)
-            publish(); // call publish again to update remote views
-        return this;
+    public SurfaceHolder getSurfaceHolder() {
+        return new DummySurfaceHolder();
     }
 
     @Override
@@ -58,5 +61,57 @@ public class LiveCardImpl implements ILiveCard {
     @Override
     public void unpublish() {
         published = false;
+    }
+
+    static class DummySurfaceHolder implements SurfaceHolder {
+
+        @Override
+        public void addCallback(Callback callback) {}
+
+        @Override
+        public void removeCallback(Callback callback) {}
+
+        @Override
+        public boolean isCreating() {
+            return false;
+        }
+
+        @Override
+        public void setType(int i) {}
+
+        @Override
+        public void setFixedSize(int i, int i2) {}
+
+        @Override
+        public void setSizeFromLayout() {}
+
+        @Override
+        public void setFormat(int i) {}
+
+        @Override
+        public void setKeepScreenOn(boolean b) {}
+
+        @Override
+        public Canvas lockCanvas() {
+            return null;
+        }
+
+        @Override
+        public Canvas lockCanvas(Rect rect) {
+            return null;
+        }
+
+        @Override
+        public void unlockCanvasAndPost(Canvas canvas) {}
+
+        @Override
+        public Rect getSurfaceFrame() {
+            return null;
+        }
+
+        @Override
+        public Surface getSurface() {
+            return null;
+        }
     }
 }

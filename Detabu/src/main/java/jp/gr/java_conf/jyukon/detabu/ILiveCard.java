@@ -1,12 +1,15 @@
 package jp.gr.java_conf.jyukon.detabu;
 
 import android.app.PendingIntent;
+import android.view.SurfaceHolder;
 import android.widget.RemoteViews;
 
-public interface ILiveCard {
-    ILiveCard setNonSilent(boolean nonSilent);
+import com.google.android.glass.timeline.LiveCard;
 
-    ILiveCard setViews(RemoteViews views);
+public interface ILiveCard {
+    ILiveCard setDirectRenderingEnabled(boolean enable);
+
+    SurfaceHolder getSurfaceHolder();
 
     ILiveCard setAction(PendingIntent pendingIntent);
 

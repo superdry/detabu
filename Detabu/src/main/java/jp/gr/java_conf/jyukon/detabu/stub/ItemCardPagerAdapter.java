@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Response;
+import com.google.android.glass.app.Card;
 import com.squareup.otto.Bus;
 
 import java.io.File;
@@ -54,8 +55,7 @@ public class ItemCardPagerAdapter extends PagerAdapter {
         final Item item = items.get(position);
 
         card.setText(item.getTitle());
-        card.setInfo(item.getPlaceName());
-        card.setFullScreenImages(true);
+        card.setFootnote(item.getPlaceName());
         mRequestManager.doRequest().getImage(item.getImageUrl(),
                 new Response.Listener<Bitmap>() {
                     @Override

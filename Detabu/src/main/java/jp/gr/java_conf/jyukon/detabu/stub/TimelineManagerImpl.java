@@ -16,7 +16,7 @@ public class TimelineManagerImpl implements ITimelineManager {
     }
 
     @Override
-    public ILiveCard getLiveCard(String id) {
+    public ILiveCard createLiveCard(String id) {
         ILiveCard liveCard = new LiveCardImpl(mContext, id);
         ((DetabuBaseService)mContext).inject(liveCard);
         return liveCard;

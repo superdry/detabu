@@ -3,8 +3,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.6.+'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.0'
+        classpath 'com.android.tools.build:gradle:0.7.+'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.1'
     }
 }
 apply plugin: 'android'
@@ -22,14 +22,17 @@ android {
         minSdkVersion 15
         targetSdkVersion 15
     }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
 }
 
 dependencies {
     compile "com.android.support:support-v4:18.0.+"
     compile 'com.squareup.dagger:dagger:1.1.0'
     apt 'com.squareup.dagger:dagger-compiler:1.1.0'
-    compile "org.projectlombok:lombok:0.11.+"
-    apt "org.projectlombok:lombok:0.11.+"
+    compile "org.projectlombok:lombok:0.12.+"
+    apt "org.projectlombok:lombok:0.12.+"
     compile project(':volley')
     compile "com.google.code.gson:gson:2.2.4"
     compile "com.jakewharton:butterknife:4.0.1"

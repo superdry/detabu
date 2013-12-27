@@ -17,8 +17,8 @@ public class CardImpl implements ICard {
     }
 
     @Override
-    public ICard setFullScreenImages(boolean fullScreenImages) {
-        mCard.setFullScreenImages(fullScreenImages);
+    public ICard setImageLayout(Card.ImageLayout imageLayout) {
+        mCard.setImageLayout(imageLayout);
         return this;
     }
 
@@ -29,8 +29,8 @@ public class CardImpl implements ICard {
     }
 
     @Override
-    public ICard setInfo(String info) {
-        mCard.setInfo(info);
+    public ICard setFootnote(String info) {
+        mCard.setFootnote(info);
         return this;
     }
 
@@ -46,17 +46,17 @@ public class CardImpl implements ICard {
     }
 
     @Override
-    public int getNumberOfImages() {
-        return mCard.getNumberOfImages();
-    }
-
-    @Override
-    public RemoteViews toRemoteViews() {
-        return mCard.toRemoteViews();
+    public int getImageCount() {
+        return mCard.getImageCount();
     }
 
     @Override
     public View toView() {
         return mCard.toView();
+    }
+
+    @Override
+    public RemoteViews toRemoteViews() {
+        return null; // This method will not be used.
     }
 }

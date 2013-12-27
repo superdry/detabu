@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Response;
+import com.google.android.glass.app.Card;
 import com.google.android.glass.widget.CardScrollAdapter;
 
 import java.io.File;
@@ -52,8 +53,8 @@ public class ItemCardScrollAdapter extends CardScrollAdapter {
         final Item item = items.get(position);
 
         holder.card.setText(item.getTitle());
-        holder.card.setInfo(item.getPlaceName());
-        holder.card.setFullScreenImages(true);
+        holder.card.setFootnote(item.getPlaceName());
+        holder.card.setImageLayout(Card.ImageLayout.FULL);
         mRequestManager.doRequest().getImage(item.getImageUrl(),
                 new Response.Listener<Bitmap>() {
                     @Override

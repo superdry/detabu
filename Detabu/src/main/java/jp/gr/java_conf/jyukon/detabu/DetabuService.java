@@ -2,19 +2,14 @@ package jp.gr.java_conf.jyukon.detabu;
 
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Binder;
-import android.os.Environment;
 import android.os.IBinder;
 
 import com.android.volley.Response;
 import com.google.android.glass.sample.compass.OrientationManager;
+import com.google.android.glass.timeline.LiveCard;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -24,8 +19,8 @@ import lombok.Getter;
 
 public class DetabuService extends DetabuBaseService {
 
-    private static final String LIVE_CARD_ID = "detabu";
-    final int MAX_IMAGES = 3;
+    private static final String LIVE_CARD_TAG = "detabu";
+    private static final int RADIUS = 500;
 
     public class DetabuBinder extends Binder {
         DetabuService getService() {
@@ -36,10 +31,10 @@ public class DetabuService extends DetabuBaseService {
     private final DetabuBinder mBinder = new DetabuBinder();
     @Inject OrientationManager mOrientationManager;
     @Inject ITimelineManager mTimelineManager;
-    private ILiveCard mLiveCard;
-    @Inject ICard mCard;
     @Inject RequestManager mRequestManager;
+    @Inject LiveCardRenderer mRenderer;
     @Getter private List<Item> items;
+    private ILiveCard mLiveCard;
 
     private final OrientationManager.OnChangedListener mListener =
             new OrientationManager.OnChangedListener() {
@@ -81,6 +76,7 @@ public class DetabuService extends DetabuBaseService {
     public void onDestroy() {
         if (mLiveCard != null && mLiveCard.isPublished()) {
             mLiveCard.unpublish();
+            mLiveCard.getSurfaceHolder().removeCallback(mRenderer);
             mLiveCard = null;
         }
         mOrientationManager = null;
@@ -88,61 +84,26 @@ public class DetabuService extends DetabuBaseService {
     }
 
     private void searchNearbyItems(Location location) {
-        final int RADIUS = 500;
         mRequestManager.doRequest().searchNearbyItems(location, RADIUS,
                 new Response.Listener<List<Item>>() {
                     @Override
                     public void onResponse(List<Item> response) {
                         if (response.size() > 0) {
-                            showLiveCard(response.size());
-                            for (Item item : response.subList(0, MAX_IMAGES)) {
-                                addImage(item.getImageUrl());
-                            }
+                            showLiveCard(response);
                             items = response;
                         }
                     }
                 });
     }
 
-    private void addImage(final String imageUrl) {
-        if (!isExternalStorageWritable())
-            return;
-        mRequestManager.doRequest().getImage(imageUrl,
-                new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap bitmap) {
-                        File file = new File(getExternalFilesDir(null), Uri.parse(imageUrl).getLastPathSegment());
-                        try {
-                            FileOutputStream fos = new FileOutputStream(file);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 75, fos);
-                            fos.flush();
-                            fos.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        if (mCard.getNumberOfImages() >= MAX_IMAGES)
-                            mCard.clearImages();
-                        mCard.addImage(Uri.parse(file.toString()));
-                        if (mLiveCard.isPublished())
-                            mLiveCard.unpublish();
-                        mLiveCard.publish();
-                    }
-                });
-    }
-
-    private boolean isExternalStorageWritable() {
-        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
-    }
-
-    private void showLiveCard(int itemCount) {
+    private void showLiveCard(List<Item> items) {
         if (mLiveCard == null) {
-            mLiveCard = mTimelineManager.getLiveCard(LIVE_CARD_ID);
-            mLiveCard.setNonSilent(true);
-            mCard.setText(getString(R.string.item_found_message, itemCount));
-            mCard.clearImages();
-            mLiveCard.setViews(mCard.toRemoteViews());
             Intent pendingIntent = new Intent(this, ItemsActivity.class);
             pendingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            mRenderer.setItems(items);
+            mRenderer.setPendingIntent(PendingIntent.getActivity(this, 0, pendingIntent, 0)); // no need on Real Glass device.
+            mLiveCard = mTimelineManager.createLiveCard(LIVE_CARD_TAG);
+            mLiveCard.setDirectRenderingEnabled(true).getSurfaceHolder().addCallback(mRenderer);
             mLiveCard.setAction(PendingIntent.getActivity(this, 0, pendingIntent, 0));
             mLiveCard.publish();
         }
