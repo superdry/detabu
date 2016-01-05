@@ -24,21 +24,28 @@ import lombok.Setter;
 public abstract class LiveCardRenderer implements SurfaceHolder.Callback {
     final int MAX_IMAGES = 3;
     protected final Context mContext;
-    @Inject protected ICard mCard;
-    @Inject RequestManager mRequestManager;
+    @Inject
+    protected ICard mCard;
+    @Inject
+    RequestManager mRequestManager;
     protected SurfaceHolder mHolder;
-    @Setter protected PendingIntent pendingIntent;
+    @Setter
+    protected PendingIntent pendingIntent;
 
     public LiveCardRenderer(Context context) {
         mContext = context;
-        ((DetabuBaseService)context).inject(this);
+        ((DetabuBaseService) context).inject(this);
     }
 
     public abstract void redrawCard();
 
     public void setItems(List<Item> items) {
+        // TODO ライフサイクルが変わったようでここでmHolderはかならずnullになる。先にSurfaceHolderを生成後に呼び出すよう修正
+        if (mHolder == null)
+            return;
         mCard.setText(mContext.getString(R.string.item_found_message, items.size()));
         mCard.clearImages();
+        // TODO mHolderがnullの場合ここで落ちる
         for (Item item : items.subList(0, MAX_IMAGES)) {
             addImage(item.getImageUrl());
         }
@@ -76,7 +83,7 @@ public abstract class LiveCardRenderer implements SurfaceHolder.Callback {
                         }
                         // TODO この条件分岐はあとで考える
 //                        if (mCard.getImageCount() >= MAX_IMAGES)
-                            mCard.clearImages();
+                        mCard.clearImages();
                         mCard.addImage(bitmap);
                         redrawCard();
                     }
