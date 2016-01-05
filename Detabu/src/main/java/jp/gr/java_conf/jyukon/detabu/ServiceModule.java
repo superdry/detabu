@@ -13,7 +13,8 @@ import dagger.Provides;
         injects = {
                 DetabuService.class,
                 LiveCardImpl.class,
-                LiveCardRenderer.class
+                LiveCardRenderer.class,
+                LiveCardRendererImpl.class
         },
         complete = false,
         library = true
