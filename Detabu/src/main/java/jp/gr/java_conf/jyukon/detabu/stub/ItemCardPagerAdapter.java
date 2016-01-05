@@ -69,17 +69,17 @@ public class ItemCardPagerAdapter extends PagerAdapter {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        card.addImage(Uri.parse(file.toString()));
+                        card.addImage(bitmap);
                     }
                 });
-        container.addView(card.toView());
-        card.toView().setOnClickListener(new View.OnClickListener() {
+        container.addView(card.getView());
+        card.getView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bus.post(new ItemSelectedEvent(item));
             }
         });
-        return card.toView();
+        return card.getView();
     }
 
     @Override

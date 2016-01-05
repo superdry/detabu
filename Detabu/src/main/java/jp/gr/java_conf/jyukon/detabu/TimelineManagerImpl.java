@@ -2,19 +2,15 @@ package jp.gr.java_conf.jyukon.detabu;
 
 import android.content.Context;
 
-import com.google.android.glass.timeline.TimelineManager;
-
-
 public class TimelineManagerImpl implements ITimelineManager {
 
-    private TimelineManager mTimelineManager;
-
+    private Context mContext;
     public TimelineManagerImpl(Context context) {
-        mTimelineManager = TimelineManager.from(context);
+        mContext = context;
     }
 
     @Override
-    public ILiveCard createLiveCard(String id) {
-        return new LiveCardImpl(mTimelineManager, id);
+    public ILiveCard createLiveCard(String tag) {
+        return new LiveCardImpl(mContext, tag);
     }
 }

@@ -21,7 +21,7 @@ public class LiveCardRendererImpl extends LiveCardRenderer {
 
     @Override
     public void redrawCard() {
-        Notification notification = new NotificationCompat.Builder(mContext).setContent(mCard.toRemoteViews()).setContentIntent(pendingIntent).setSmallIcon(R.drawable.icon).build();
+        Notification notification = new NotificationCompat.Builder(mContext).setContent(mCard.getRemoteViews()).setContentIntent(pendingIntent).setSmallIcon(R.drawable.icon).build();
         mNotificationManager.notify(0, notification);
     }
 }

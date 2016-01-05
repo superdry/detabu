@@ -13,7 +13,7 @@ public class LiveCardRendererImpl extends LiveCardRenderer {
     public void redrawCard() {
         Canvas canvas = mHolder.lockCanvas();
         if (canvas != null) {
-            mCard.toView().draw(canvas);
+            mCard.getView().draw(canvas);
             mHolder.unlockCanvasAndPost(canvas);
         }
     }

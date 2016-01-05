@@ -74,9 +74,10 @@ public abstract class LiveCardRenderer implements SurfaceHolder.Callback {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        if (mCard.getImageCount() >= MAX_IMAGES)
+                        // TODO この条件分岐はあとで考える
+//                        if (mCard.getImageCount() >= MAX_IMAGES)
                             mCard.clearImages();
-                        mCard.addImage(Uri.parse(file.toString()));
+                        mCard.addImage(bitmap);
                         redrawCard();
                     }
                 });

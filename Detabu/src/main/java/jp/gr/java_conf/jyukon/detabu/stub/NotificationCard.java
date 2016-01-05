@@ -1,6 +1,7 @@
 package jp.gr.java_conf.jyukon.detabu.stub;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -28,11 +29,6 @@ public class NotificationCard implements ICard {
     }
 
     @Override
-    public ICard setImageLayout(Card.ImageLayout imageLayout) {
-        return this;
-    }
-
-    @Override
     public ICard setText(String text) {
         mRemoteViews.setTextViewText(R.id.text, text);
         return this;
@@ -45,10 +41,10 @@ public class NotificationCard implements ICard {
     }
 
     @Override
-    public ICard addImage(Uri uri) {
-        mRemoteViews.setImageViewUri(imageViewIds[mImageUris.size()], uri);
+    public ICard addImage(Bitmap bitmap) {
+        mRemoteViews.setImageViewBitmap(imageViewIds[mImageUris.size()],bitmap);
         mRemoteViews.setViewVisibility(imageViewIds[mImageUris.size()], View.VISIBLE);
-        mImageUris.add(uri);
+        mImageUris.add(Uri.parse("http://hoge.com"));
         return this;
     }
 
@@ -58,17 +54,12 @@ public class NotificationCard implements ICard {
     }
 
     @Override
-    public int getImageCount() {
-        return mImageUris.size();
-    }
-
-    @Override
-    public RemoteViews toRemoteViews() {
+    public RemoteViews getRemoteViews() {
         return mRemoteViews;
     }
 
     @Override
-    public View toView() {
+    public View getView() {
         return null; // This method will not be used.
     }
 }

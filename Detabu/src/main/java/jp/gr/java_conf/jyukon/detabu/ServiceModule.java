@@ -2,6 +2,8 @@ package jp.gr.java_conf.jyukon.detabu;
 
 import android.app.Service;
 
+import com.google.android.glass.widget.CardBuilder;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -32,7 +34,7 @@ public class ServiceModule {
 
     @Provides
     ICard provideICard() {
-        return new CardImpl(mService);
+        return new CardImpl(mService, CardBuilder.Layout.CAPTION);
     }
 
     @Provides

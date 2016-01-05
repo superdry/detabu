@@ -2,6 +2,8 @@ package jp.gr.java_conf.jyukon.detabu;
 
 import android.content.Context;
 
+import com.google.android.glass.widget.CardBuilder;
+
 public class CardFactory implements ICardFactory {
     Context mContext;
 
@@ -11,6 +13,6 @@ public class CardFactory implements ICardFactory {
 
     @Override
     public ICard getCard() {
-        return new CardImpl(mContext);
+        return new CardImpl(mContext, CardBuilder.Layout.CAPTION);
     }
 }

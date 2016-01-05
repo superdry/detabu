@@ -1,25 +1,19 @@
 package jp.gr.java_conf.jyukon.detabu;
 
 import android.content.Context;
-import android.net.Uri;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.google.android.glass.app.Card;
+import com.google.android.glass.widget.CardBuilder;
 
 
 public class CardImpl implements ICard {
 
-    private Card mCard;
+    private CardBuilder mCard;
 
-    public CardImpl(Context context) {
-        mCard = new Card(context);
-    }
-
-    @Override
-    public ICard setImageLayout(Card.ImageLayout imageLayout) {
-        mCard.setImageLayout(imageLayout);
-        return this;
+    public CardImpl(Context context, CardBuilder.Layout layout) {
+        mCard = new CardBuilder(context, layout);
     }
 
     @Override
@@ -35,8 +29,8 @@ public class CardImpl implements ICard {
     }
 
     @Override
-    public ICard addImage(Uri uri) {
-        mCard.addImage(uri);
+    public ICard addImage(Bitmap bitmap) {
+        mCard.addImage(bitmap);
         return this;
     }
 
@@ -46,17 +40,12 @@ public class CardImpl implements ICard {
     }
 
     @Override
-    public int getImageCount() {
-        return mCard.getImageCount();
+    public View getView() {
+        return mCard.getView();
     }
 
     @Override
-    public View toView() {
-        return mCard.toView();
-    }
-
-    @Override
-    public RemoteViews toRemoteViews() {
-        return null; // This method will not be used.
+    public RemoteViews getRemoteViews() {
+        return mCard.getRemoteViews();
     }
 }

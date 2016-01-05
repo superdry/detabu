@@ -1,6 +1,7 @@
 package jp.gr.java_conf.jyukon.detabu.stub;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,11 +34,6 @@ public class FullScreenImageCard implements ICard {
     }
 
     @Override
-    public ICard setImageLayout(Card.ImageLayout imageLayout) {
-        return this;
-    }
-
-    @Override
     public ICard setText(String text) {
         this.text.setText(text);
         return this;
@@ -50,8 +46,8 @@ public class FullScreenImageCard implements ICard {
     }
 
     @Override
-    public ICard addImage(Uri uri) {
-        this.image.setImageURI(uri);
+    public ICard addImage(Bitmap bitmap) {
+        this.image.setImageBitmap(bitmap);
         this.image.setVisibility(View.VISIBLE);
         return this;
     }
@@ -61,17 +57,12 @@ public class FullScreenImageCard implements ICard {
     }
 
     @Override
-    public int getImageCount() {
-        return 0;
-    }
-
-    @Override
-    public RemoteViews toRemoteViews() {
+    public RemoteViews getRemoteViews() {
         return null; // This method will not be used.
     }
 
     @Override
-    public View toView() {
+    public View getView() {
         return mView;
     }
 }

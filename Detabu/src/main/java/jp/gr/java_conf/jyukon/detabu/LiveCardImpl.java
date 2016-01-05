@@ -1,19 +1,23 @@
 package jp.gr.java_conf.jyukon.detabu;
 
 import android.app.PendingIntent;
+import android.content.Context;
 import android.view.SurfaceHolder;
 import android.widget.RemoteViews;
 
 import com.google.android.glass.timeline.LiveCard;
-import com.google.android.glass.timeline.TimelineManager;
+//import com.google.android.glass.timeline.TimelineManager;
 
 
 public class LiveCardImpl implements ILiveCard {
 
     private LiveCard mLiveCard;
 
-    public LiveCardImpl(TimelineManager timelineManager, String id) {
-        mLiveCard = timelineManager.createLiveCard(id);
+//    public LiveCardImpl(TimelineManager timelineManager, String id) {
+//        mLiveCard = timelineManager.createLiveCard(id);
+//    }
+    public LiveCardImpl(Context context, String tag) {
+        mLiveCard = new LiveCard(context, tag);
     }
 
     @Override

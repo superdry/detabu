@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Response;
-import com.google.android.glass.app.Card;
 import com.google.android.glass.widget.CardScrollAdapter;
 
 import java.io.File;
@@ -54,7 +53,6 @@ public class ItemCardScrollAdapter extends CardScrollAdapter {
 
         holder.card.setText(item.getTitle());
         holder.card.setFootnote(item.getPlaceName());
-        holder.card.setImageLayout(Card.ImageLayout.FULL);
         mRequestManager.doRequest().getImage(item.getImageUrl(),
                 new Response.Listener<Bitmap>() {
                     @Override
@@ -68,11 +66,16 @@ public class ItemCardScrollAdapter extends CardScrollAdapter {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        holder.card.addImage(Uri.parse(file.toString()));
+                        holder.card.addImage(bitmap);
                     }
                 });
 
-        return holder.card.toView();
+        return holder.card.getView();
+    }
+
+    @Override
+    public int getPosition(Object o) {
+        return items.indexOf(o);
     }
 
     @Override
@@ -85,13 +88,4 @@ public class ItemCardScrollAdapter extends CardScrollAdapter {
         return items.get(i);
     }
 
-    @Override
-    public int findIdPosition(Object o) {
-        return 0;
-    }
-
-    @Override
-    public int findItemPosition(Object o) {
-        return items.indexOf(o);
-    }
 }
